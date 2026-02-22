@@ -6,5 +6,11 @@ export default merge(common, {
     devtool: 'source-map',
     devServer: {
         static: './dist',
+        watchFiles: {
+            paths: ["src/index.html"],
+            options: {
+                usePolling: false,
+            },
+        },
     },
 });

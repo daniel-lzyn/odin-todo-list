@@ -16,4 +16,9 @@ export default {
         path: path.resolve(import.meta.dirname, 'dist'),
         clean: true,
     },
+    module: {
+        rules: [
+            { test: /\.css/i, use: ["style-loader", "css-loader"]},
+        ],
+    },
 };
