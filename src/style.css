@@ -49,22 +49,46 @@ dialog {
     padding: 10px;
     border-radius: 10px;
     border: 2px solid black;
-    display: flex;
     width: 500px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.dialog_content {
+    display: flex;
     flex-direction: column;
 }
 
-dialog > svg {
+.dialog_content > svg {
     height: 30px;
     align-self: flex-end;
 }
 
-dialog > svg:hover {
+.dialog_content > svg:hover {
     cursor: pointer;
+}
+
+.project_form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.project_form > label {
+    font-size: 1.3rem;
+}
+
+.project_form > input {
+    padding: 3px 10px;
+    font-size: 1rem;
+}
+
+.project_form > button {
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    margin-top: 10px;
 }
 
 .todo_form {
