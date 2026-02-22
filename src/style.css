@@ -55,6 +55,16 @@ dialog {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    flex-direction: column;
+}
+
+dialog > svg {
+    height: 30px;
+    align-self: flex-end;
+}
+
+dialog > svg:hover {
+    cursor: pointer;
 }
 
 .todo_form {
