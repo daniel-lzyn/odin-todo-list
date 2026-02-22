@@ -19,5 +19,31 @@
             <button class="btn">Add Todo Item</button>
         </div>
     </main>
+    <dialog>
+        <form action="/" class="todo_form">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title">
+            <label for="desc">Description</label>
+            <input type="text" name="desc" id="desc">
+            <label for="dueDate">Due Date</label>
+            <input type="date" name="dueDate" id="dueDate">
+            <fieldset>
+                <legend>Priority</legend>
+                <div>
+                    <input type="radio" name="priority" id="high" value="high">
+                    <label for="high">High</label>
+                </div>
+                <div>
+                    <input type="radio" name="priority" id="medium" value="medium">
+                    <label for="medium">Medium</label>
+                </div>
+                <div>
+                    <input type="radio" name="priority" id="low" value="low">
+                    <label for="low">Low</label>
+                </div>
+            </fieldset>
+            <button type="submit">Add Todo Item</button>
+        </form>
+    </dialog>
 </body>
 </html>

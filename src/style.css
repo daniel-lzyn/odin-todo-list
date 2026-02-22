@@ -44,3 +44,38 @@ main > div > p {
     cursor: pointer;
     background-color: hsl(0, 0%, 80%);
 }
+
+dialog {
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid black;
+    display: flex;
+    width: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.todo_form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.todo_form > input {
+    padding: 3px 10px;
+    font-size: 1rem;
+}
+
+.todo_form > fieldset {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.todo_form > button {
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    margin-top: 10px;
+}
