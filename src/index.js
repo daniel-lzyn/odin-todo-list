@@ -35,6 +35,17 @@ function closeDialog(btn, dialog) {
     });
 };
 
+function updateProjectItems(projectObject) {
+    const projectContainer = document.getElementById('project_container');
+    projectContainer.replaceChildren();
+    
+    for (const property in projectObject) {
+        const projectTitleEl = document.createElement('p');
+        projectTitleEl.innerText = property;
+        projectContainer.append(projectTitleEl);
+    };
+};
+
 // Function to handle form data
 function submitForm(form) {
     form.addEventListener('submit', (e) => {
@@ -43,6 +54,7 @@ function submitForm(form) {
         for (const pair of formData.entries()) {
             projectContainer[pair[1]] = new ProjectData(pair[1]);
             projectDialog.close();
+            updateProjectItems(projectContainer);
             console.log(projectContainer);
         };
     });
@@ -54,3 +66,33 @@ submitForm(projectForm);
 
 displayDialog(addTodoBtn, todoDialog);
 closeDialog(todoCloseForm, todoDialog);
+
+// Function to refresh todo list
+function refreshTodo() {
+    const todoContainer = document.getElementById('todo_container');
+    const todoTitle = document.getElementById('todo_title')
+    todoContainer.replaceChildren();
+
+    if (selectedProject in projectContainer) {
+        console.log(projectContainer[selectedProject]);
+        
+        const currentTodo = projectContainer[selectedProject];
+        todoTitle.textContent = `${currentTodo.projectTitle} todo list:`;
+
+        currentTodo.todoList.forEach(todoItem => {
+            const paragrafEl = document.createElement('p');
+            paragrafEl.textContent = todoItem;
+            todoContainer.append(paragrafEl);
+        });
+    };
+};
+
+// Adding event listener to projects.
+const projectContainerEl = document.getElementById('project_container');
+
+let selectedProject = "";
+
+projectContainerEl.addEventListener('click', (e) => {
+    selectedProject = e.target.textContent;
+    refreshTodo();
+});
