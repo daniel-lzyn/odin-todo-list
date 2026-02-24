@@ -56,7 +56,6 @@ function submitForm(form) {
             projectContainer[pair[1]] = new ProjectData(pair[1]);
             projectDialog.close();
             updateProjectItems(projectContainer);
-            console.log(projectContainer);
         };
     });
 };
@@ -70,14 +69,11 @@ function submitTodoForm(form) {
             const todoObject = {};
 
             for(const pair of formData.entries()) {
-                console.log(`${pair[0]} ${pair[1]}`);
                 todoObject[pair[0]] = pair[1];
-                // projectContainer[selectedProject].todoList.push([pair[1]]);
-                // console.log(projectContainer[selectedProject]);
             };
             projectContainer[selectedProject].todoList.push(todoObject);
-            console.log(todoObject);
             todoDialog.close();
+            refreshTodo();
         };
 
         if(selectedProject === "") {
@@ -101,15 +97,23 @@ function refreshTodo() {
     todoContainer.replaceChildren();
 
     if (selectedProject in projectContainer) {
-        console.log(projectContainer[selectedProject]);
-
         const currentTodo = projectContainer[selectedProject];
-        todoTitle.textContent = `${currentTodo.projectTitle} todo list:`;
+        const todoDiv = document.createElement('div');
 
+        todoTitle.textContent = `${currentTodo.projectTitle} todo list:`;
         currentTodo.todoList.forEach(todoItem => {
-            const paragrafEl = document.createElement('p');
-            paragrafEl.textContent = todoItem;
-            todoContainer.append(paragrafEl);
+            const todoName = document.createElement('p');
+            const todoDesc = document.createElement('p');
+            const todoDueDate = document.createElement('p');
+            const todoPrioroty = document.createElement('p');
+
+            todoName.textContent = todoItem.title;
+            todoDesc.textContent = `Description: ${todoItem.desc}`;
+            todoDueDate.textContent = `Due date: ${todoItem.dueDate}`;
+            todoPrioroty.textContent = `Priority: ${todoItem.priority}`;
+
+            todoDiv.append(todoName, todoDesc, todoDueDate, todoPrioroty);
+            todoContainer.append(todoDiv);
         });
     };
 };
