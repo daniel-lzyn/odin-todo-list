@@ -30,12 +30,10 @@ const todoForm = document.getElementById('todo_form');
 submitForm(projectForm);
 
 const projectItemStore = function(formObject) {
-    console.log(formObject);
     projectDialog.close();
 
     if("projectName" in formObject) {
         projectContainer[formObject.projectName] = new ProjectData(formObject.projectName);
-        console.log(projectContainer);
     };
     
     updateProjectItems(projectContainer);
@@ -55,36 +53,31 @@ function updateProjectItems(projectObject) {
     };
 };
 
-// projectItemStore();
-
 // Function to handle todo form data
-function submitTodoForm(form) {
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if(selectedProject !== "") {
-            const formData = new FormData(form);
-            const todoObject = {};
+submitForm(todoForm);
 
-            for(const pair of formData.entries()) {
-                todoObject[pair[0]] = pair[1];
-            };
-            projectContainer[selectedProject].todoList.push(todoObject);
-            todoDialog.close();
-            refreshTodo();
-        };
+const todoStoreItem = function(formObject) {
+    todoDialog.close();
 
-        if(selectedProject === "") {
-            alert("Plase select a project first!");
-        };
-    });
-}
+    const requiredKeys = ["title", "desc", "dueDate", "priority"];
+    const keyCheck = requiredKeys.every(key => key in formObject);
 
+    if(keyCheck && selectedProject !== "") {
+        projectContainer[selectedProject].todoList.push(formObject);
+        refreshTodo();
+    } else if (keyCheck && selectedProject === "") {
+        alert('Please select a project!');
+    };
+};
+
+formObserve(todoStoreItem);
+
+// Displaying and closing dialog
 displayDialog(addProjectBtn, projectDialog);
 closeDialog(projectCloseForm, projectDialog);
 
 displayDialog(addTodoBtn, todoDialog);
 closeDialog(todoCloseForm, todoDialog);
-submitTodoForm(todoForm);
 
 // Function to refresh todo list
 function refreshTodo() {
