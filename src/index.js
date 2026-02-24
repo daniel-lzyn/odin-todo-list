@@ -54,11 +54,34 @@ function updateProjectItems(projectObject) {
     projectContainer.replaceChildren();
     
     for (const property in projectObject) {
+        const projectDiv = document.createElement('div');
         const projectTitleEl = document.createElement('p');
+        const deleteBtn = document.createElement('button');
+
+        projectDiv.classList.add(property);
+        deleteBtn.textContent = "Delete";
         projectTitleEl.innerText = property;
-        projectContainer.append(projectTitleEl);
+
+        projectDiv.append(projectTitleEl, deleteBtn)
+        projectContainer.append(projectDiv);
     };
 };
+
+// IIFE to handle project deletion
+(function() {
+    const projectContainerEl = document.getElementById('project_container');
+    projectContainerEl.addEventListener('click', (e) => {
+        if(e.target.textContent === "Delete") {
+            const selectedProjectEl = e.target.parentNode.classList[0];
+            delete projectContainer[selectedProjectEl];
+            console.log(projectContainer)
+            console.log('deleted')
+            selectedProject = "";
+        }
+
+        updateProjectItems(projectContainer);
+    });
+})();
 
 // Function to handle todo form data
 submitForm(todoForm);
@@ -111,6 +134,7 @@ function refreshTodo() {
     };
 };
 
+// IIFE to handle todo item deletion
 (function() {
     const todoContainer = document.getElementById('todo_container');
     todoContainer.addEventListener('click', (e) => {
@@ -137,6 +161,8 @@ const projectContainerEl = document.getElementById('project_container');
 let selectedProject = "";
 
 projectContainerEl.addEventListener('click', (e) => {
-    selectedProject = e.target.textContent;
-    refreshTodo();
+    if(e.target.textContent in projectContainer){
+        selectedProject = e.target.textContent;
+        refreshTodo();
+    };
 });

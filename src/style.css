@@ -114,6 +114,6 @@ dialog {
     margin-top: 10px;
 }
 
-#project_container > p {
+#project_container > div > p {
     cursor: pointer;
 }
