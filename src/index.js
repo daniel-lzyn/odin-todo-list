@@ -20,6 +20,7 @@ const projectForm = document.getElementById('project_form');
 const addTodoBtn = document.getElementById('add_todo_btn');
 const todoDialog = document.getElementById('todo_dialog');
 const todoCloseForm = document.getElementById('todo_close_form');
+const todoForm = document.getElementById('todo_form');
 
 // Function to display dialog
 function displayDialog(btn, dialog) {
@@ -46,12 +47,12 @@ function updateProjectItems(projectObject) {
     };
 };
 
-// Function to handle form data
+// Function to handle project form data
 function submitForm(form) {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(form);
-        for (const pair of formData.entries()) {
+        for(const pair of formData.entries()) {
             projectContainer[pair[1]] = new ProjectData(pair[1]);
             projectDialog.close();
             updateProjectItems(projectContainer);
@@ -60,22 +61,48 @@ function submitForm(form) {
     });
 };
 
+// Function to handle todo form data
+function submitTodoForm(form) {
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if(selectedProject !== "") {
+            const formData = new FormData(form);
+            const todoObject = {};
+
+            for(const pair of formData.entries()) {
+                console.log(`${pair[0]} ${pair[1]}`);
+                todoObject[pair[0]] = pair[1];
+                // projectContainer[selectedProject].todoList.push([pair[1]]);
+                // console.log(projectContainer[selectedProject]);
+            };
+            projectContainer[selectedProject].todoList.push(todoObject);
+            console.log(todoObject);
+            todoDialog.close();
+        };
+
+        if(selectedProject === "") {
+            alert("Plase select a project first!");
+        };
+    });
+}
+
 displayDialog(addProjectBtn, projectDialog);
 closeDialog(projectCloseForm, projectDialog);
 submitForm(projectForm);
 
 displayDialog(addTodoBtn, todoDialog);
 closeDialog(todoCloseForm, todoDialog);
+submitTodoForm(todoForm);
 
 // Function to refresh todo list
 function refreshTodo() {
     const todoContainer = document.getElementById('todo_container');
-    const todoTitle = document.getElementById('todo_title')
+    const todoTitle = document.getElementById('todo_title');
     todoContainer.replaceChildren();
 
     if (selectedProject in projectContainer) {
         console.log(projectContainer[selectedProject]);
-        
+
         const currentTodo = projectContainer[selectedProject];
         todoTitle.textContent = `${currentTodo.projectTitle} todo list:`;
 
