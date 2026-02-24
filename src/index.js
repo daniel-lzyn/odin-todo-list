@@ -1,6 +1,7 @@
 import './style.css'
 
-import { displayDialog, closeDialog } from "./dialogHandler.js";
+import { displayDialog, closeDialog } from './dialogHandler.js';
+import { submitForm, observe as formObserve } from './formHandler.js';
 
 // Classes
 class ProjectData {
@@ -10,6 +11,7 @@ class ProjectData {
     };
 };
 
+// Project data container
 const projectContainer = {};
 
 // Project form
@@ -24,7 +26,24 @@ const todoDialog = document.getElementById('todo_dialog');
 const todoCloseForm = document.getElementById('todo_close_form');
 const todoForm = document.getElementById('todo_form');
 
+// Function to store project object.
+submitForm(projectForm);
 
+const projectItemStore = function(formObject) {
+    console.log(formObject);
+    projectDialog.close();
+
+    if("projectName" in formObject) {
+        projectContainer[formObject.projectName] = new ProjectData(formObject.projectName);
+        console.log(projectContainer);
+    };
+    
+    updateProjectItems(projectContainer);
+};
+
+formObserve(projectItemStore);
+
+// Project item DOM Manipulator
 function updateProjectItems(projectObject) {
     const projectContainer = document.getElementById('project_container');
     projectContainer.replaceChildren();
@@ -36,18 +55,7 @@ function updateProjectItems(projectObject) {
     };
 };
 
-// Function to handle project form data
-function submitForm(form) {
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        for(const pair of formData.entries()) {
-            projectContainer[pair[1]] = new ProjectData(pair[1]);
-            projectDialog.close();
-            updateProjectItems(projectContainer);
-        };
-    });
-};
+// projectItemStore();
 
 // Function to handle todo form data
 function submitTodoForm(form) {
@@ -73,7 +81,6 @@ function submitTodoForm(form) {
 
 displayDialog(addProjectBtn, projectDialog);
 closeDialog(projectCloseForm, projectDialog);
-submitForm(projectForm);
 
 displayDialog(addTodoBtn, todoDialog);
 closeDialog(todoCloseForm, todoDialog);

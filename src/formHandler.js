@@ -1,12 +1,29 @@
-export function submitForm(form) {
+const observer = [];
+
+function submitForm(form) {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(form);
         const formObject = {};
-        for(const pair of formData.entries()) {
-            formObject[pair[0]] = pair[1];
+
+        for(const [key, value] of formData.entries()) {
+            formObject[key] = value;
         };
 
-        return formObject;
+        notify(observer, formObject);
     });
 };
+
+function notify(observer, data) {
+    if(observer.length !== 0) {
+        observer.forEach(observer => {
+            observer(data);
+        });
+    };
+}
+
+function observe(newObserver) {
+    observer.push(newObserver);
+}
+
+export { submitForm, observe };
