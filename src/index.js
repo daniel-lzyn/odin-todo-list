@@ -1,5 +1,7 @@
 import './style.css'
 
+import { displayDialog, closeDialog } from "./dialogHandler.js";
+
 // Classes
 class ProjectData {
     constructor(projectTitle, todoList = []) {
@@ -22,19 +24,6 @@ const todoDialog = document.getElementById('todo_dialog');
 const todoCloseForm = document.getElementById('todo_close_form');
 const todoForm = document.getElementById('todo_form');
 
-// Function to display dialog
-function displayDialog(btn, dialog) {
-    btn.addEventListener('click', () => {
-        dialog.showModal();
-    });
-};
-
-// Function to close dialog
-function closeDialog(btn, dialog) {
-    btn.addEventListener('click', () => {
-        dialog.close();
-    });
-};
 
 function updateProjectItems(projectObject) {
     const projectContainer = document.getElementById('project_container');
